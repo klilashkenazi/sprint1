@@ -1,5 +1,5 @@
 body {
-    background: #ffffff;
+    background: #f5dddd;
     color: rgb(0, 0, 0);
 }
 
@@ -16,9 +16,23 @@ tbody {
     border: 1px solid gray;
 }
 
-.mine{
-    background-color: black;
+.light{
+    background-color: yellow;  
 }
+
+img{
+    width: 30px;
+    height: 30px;
+}
+
+.levels{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.lives{
+    margin-bottom: 8px;
+}
+
 footer{
     background-color:rgb(237, 181, 107);
     padding: 10px;

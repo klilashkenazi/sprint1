@@ -9,13 +9,33 @@
 </head>
 
 <body onload="onInit()">
+    <div >
+    <img src="light.png" class="hint" onclick="hint(this)">
+    <img src="light.png" class="hint" onclick="hint(this)"> 
+    <img src="light.png" class="hint" onclick="hint(this)">  
+    </div>
+    <button class="smiley" onclick="onInit()">Restart</button>
+    <div class="levels">
+        <button onclick="setLevel(4,2)">Beginner</button>
+        <button onclick="setLevel(8,14)">Medium</button>
+        <button onclick="setLevel(12,32)">Expert</button>
+    </div>
+    <div id="timeDisplay">00:00:00</div>
+    <!-- <div class="score">Score</div> -->
+    <!-- <div>Best Score</div> -->
+    <div class="lives">Lives: <span></span></div>
+    <div class="flags-count"></div>
     <table>
         <tbody class="board"></tbody>
     </table>
-    <script src="main.js"></script>
+
     <footer>
         Klil Ashkenazi
     </footer>
+    <script src="main.js"></script>
+    <script src="timer.js"></script>
+
+   
 </body>
 
 </html>
