@@ -21,7 +21,6 @@ function updateTime() {
       // console.log(elapsedTime)
   
       document.getElementById('timeDisplay').innerText = formattedTime;
-      // checkScore(elapsedTime)
     }
   }
   function formatTime(timeInMilliseconds) {

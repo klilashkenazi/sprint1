@@ -1,9 +1,14 @@
 body {
     background: #f5dddd;
     color: rgb(0, 0, 0);
+    
+}
+table{
+   margin: auto;
 }
 
 tbody {
+    
     background-color:rgb(182, 231, 231);
     border-collapse:separate;
     border-spacing: 10px;
@@ -16,6 +21,14 @@ tbody {
     border: 1px solid gray;
 }
 
+button{
+    margin-bottom: 5px;
+}
+
+p{
+    margin: 0px;
+    margin-bottom: 15px;
+}
 .light{
     background-color: yellow;  
 }
@@ -33,6 +46,9 @@ img{
     margin-bottom: 8px;
 }
 
+.safe{
+    background-color: coral;
+}
 footer{
     background-color:rgb(237, 181, 107);
     padding: 10px;

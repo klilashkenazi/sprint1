@@ -9,10 +9,12 @@
 </head>
 
 <body onload="onInit()">
-    <div >
-    <img src="light.png" class="hint" onclick="hint(this)">
-    <img src="light.png" class="hint" onclick="hint(this)"> 
-    <img src="light.png" class="hint" onclick="hint(this)">  
+    <button onclick="safeClick()">safe-click</button>
+    <p>3 left</p>
+    <div>
+        <img src="light.png" class="hint" onclick="hint(this)">
+        <img src="light.png" class="hint" onclick="hint(this)">
+        <img src="light.png" class="hint" onclick="hint(this)">
     </div>
     <button class="smiley" onclick="onInit()">Restart</button>
     <div class="levels">
@@ -21,8 +23,6 @@
         <button onclick="setLevel(12,32)">Expert</button>
     </div>
     <div id="timeDisplay">00:00:00</div>
-    <!-- <div class="score">Score</div> -->
-    <!-- <div>Best Score</div> -->
     <div class="lives">Lives: <span></span></div>
     <div class="flags-count"></div>
     <table>
@@ -35,7 +35,7 @@
     <script src="main.js"></script>
     <script src="timer.js"></script>
 
-   
+
 </body>
 
 </html>
