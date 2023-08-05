@@ -3,6 +3,11 @@ body {
     color: rgb(0, 0, 0);
     
 }
+
+.dark-mode-body{
+background: rgb(99, 92, 92);
+}
+
 table{
    margin: auto;
 }
@@ -14,12 +19,13 @@ tbody {
     border-spacing: 10px;
 }
 
-.cell {
+td{
     width: 30px;
     height: 30px;
     border-radius: 7px;
-    border: 1px solid gray;
+    border: 1px solid rgb(169, 168, 168);
 }
+
 
 button{
     margin-bottom: 5px;
@@ -32,6 +38,7 @@ p{
 .light{
     background-color: yellow;  
 }
+
 
 img{
     width: 30px;

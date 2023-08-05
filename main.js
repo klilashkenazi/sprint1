@@ -17,6 +17,7 @@ var gFlagsLeft
 var isTimerRunning = false
 var startTime
 var gSafeClicksCount
+var gMineEx
 
 function onInit() {
     gBoard = buildBoard(gLevel.size)
@@ -28,16 +29,23 @@ function onInit() {
     renderLives()
     gHint = false
     gfirstClick = false
-    gFlagsLeft = gLevel.mines
+    gFlagsLeft = (gMineEx) ? gLevel.mines += 3 : gLevel.mines
+    gMineEx = false
     displayMinesLeft()
     gSafeClicksCount = 3
+    const elP = document.querySelector('p')
+    elP.innerText = `${gSafeClicksCount} left`
+    const elImgs = document.querySelectorAll('img')
+    for (var i = 0; i < elImgs.length; i++) {
+        elImgs[i].style.display = 'inline'
+    }
 }
 
 function setLevel(size, mines) {
     gLevel.size = +size
     gLevel.mines = +mines
+    gMineEx = false
     onInit()
-
 }
 
 function buildBoard(size) {
@@ -147,13 +155,13 @@ function onCellClicked(elCell, i, j) {
     if (gBoard[i][j].isShown === false) {
         gBoard[i][j].isShown = true
     }
-    if (gBoard[i][j].isMine && LIVES === '❤') {
+    if (gBoard[i][j].isMine && LIVES === '❤' && gHint === false) {
         revealAllMines(gBoard)
         elBtn.innerText = '🤯'
         LIVES = '0'
         gGameEnd = true
         stopTimer()
-    } else if (gBoard[i][j].isMine) {
+    } else if (gBoard[i][j].isMine && gHint === false) {
         LIVES = LIVES.slice(0, -1)
         gFlagsLeft--
         displayMinesLeft()
@@ -165,12 +173,15 @@ function onCellClicked(elCell, i, j) {
     if (gHint) showNegs(gBoard, i, j)
 
     checkGameOver(gBoard)
+    // console.log('gFlagsLeft:', gFlagsLeft)
+    // console.log('gLevel.mines:', gLevel.mines)
 }
 
 function onCellMarked(elCell, i, j) {
     event.preventDefault()
     if (gGameEnd) return
     if (gBoard[i][j].isShown) return
+    // console.log(gBoard[i][j].isShown)
     if (gBoard[i][j].isMarked) {
         gBoard[i][j].isMarked = false
         gFlagsLeft++
@@ -182,6 +193,7 @@ function onCellMarked(elCell, i, j) {
     }
     renderBoard(gBoard)
     checkGameOver(gBoard)
+    console.log('gFlagsLeft:', gFlagsLeft)
 }
 
 function expandShown(board, elCell, i, j) {
@@ -208,8 +220,13 @@ function revealAllMines(board) {
 }
 
 function hint(elImg) {
-    elImg.classList.toggle('light')
+    if (gfirstClick === false) return
+    elImg.classList.add('light')
     gHint = true
+    setTimeout(() => {
+        elImg.style.display = 'none'
+        elImg.classList.remove('light')
+    }, 2000)
 
 }
 
@@ -238,10 +255,9 @@ function showNegs(board, rowIdx, colIdx) {
         board[negsToShow[i].i][negsToShow[i].j].isShown = false
     }
 
-    const elImg = document.querySelector('.light')
     setTimeout(() => {
         renderBoard(board)
-        elImg.style.display = 'none'
+
     }, 1000)
 
     gHint = false
@@ -275,6 +291,43 @@ function safeClick() {
     elP.innerText = `${gSafeClicksCount} left`
 }
 
+function mineExterminator() {
+    if (gLevel.mines < 4) {
+        alert('Can\'t use Mine Exterminator in Beginner level')
+        return
+    }
+    if (gMineEx) return
+    if (gfirstClick === false) return
+    var mines = []
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[i].length; j++) {
+            if (gBoard[i][j].isMine) {
+                mines.push({ i, j })
+            }
+        }
+    }
+    // console.log(mines)
+    for (var i = 0; i < 3; i++) {
+        var location = mines.splice(getRandomInt(0, mines.length), 1)
+        var randI = location[0].i
+        var randJ = location[0].j
+        if (gBoard[randI][randJ].isMarked) {
+            gBoard[randI][randJ].isMarked = false
+            gFlagsLeft++
+        }
+        gBoard[randI][randJ].isMine = false
+
+    }
+    // console.log(mines)
+    setMinesNegsCount(gBoard)
+    gLevel.mines -= 3
+    gFlagsLeft -= 3
+    displayMinesLeft()
+    renderBoard(gBoard)
+    gMineEx = true
+    console.log('gFlagsLeft:', gFlagsLeft)
+}
+
 function checkGameOver(board) {
     if (gFlagsLeft !== 0) return
     var isShowncount = 0
@@ -287,13 +340,17 @@ function checkGameOver(board) {
             }
         }
     }
-    console.log(isShowncount)
     if (isShowncount === nums && gFlagsLeft === 0) {
         const elBtn = document.querySelector('.smiley')
         elBtn.innerText = '😍'
         gGameEnd = true
         stopTimer()
     }
+}
+
+function darkMode() {
+    const elBody = document.querySelector('body')
+    elBody.classList.toggle('dark-mode-body')
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
